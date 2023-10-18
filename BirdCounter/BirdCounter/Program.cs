@@ -2,26 +2,50 @@
 
 Console.WriteLine("Welcome to BirdCounter application!");
 Console.WriteLine("");
-
-Console.WriteLine("Enter full Latin or polish species name:");
+Console.WriteLine("Enter full species name:");
 // tutaj event że plik istnieje lub nie, albo if i writteline albo Exception że nie istnieje i powstanie nowy.
 var speciesNameReaded = Console.ReadLine();
-
 Console.WriteLine("press T key to work with temporary data");
 Console.WriteLine("press S key to get instant statistics of data stored in file");
 Console.WriteLine("press U  key to create new set of data or update existing file");
+Console.WriteLine("press Q  key to to quit and get statistics");
 // Jeśli podał T lub U to wyświetl: Console.WriteLine("pres Q key to quit and get statistics ");
-Console.WriteLine("");
 
 var input = Console.ReadLine();
+
 if (input == "T" || input == "t")
 {
-    var bird = new BirdInMemory(speciesNameReaded);   
+    BirdInMemory bird = NewBirdInMemory();
+    NumberReader(bird);
+}
+if (input == "U" || input == "u")
+{
+    BirdInFile bird = NewBirdInFile();
+    NumberReader(bird);
+}
+
+BirdInMemory NewBirdInMemory()
+{
+    var speciesName = speciesNameReaded;
+    var bird = new BirdInMemory(speciesName);
+    return bird;
+}
+
+
+BirdInFile NewBirdInFile()
+{
+    var speciesName = speciesNameReaded;
+    var bird = new BirdInFile(speciesName);
+    return bird;
+}
+
+static void NumberReader(IBird bird)
+{
     while (true)
     {
-        Console.WriteLine("Enter subsequent numbers of observed individuals:");
+        Console.WriteLine("Enter subsequent numbers of observed individuals:"); // event dodano do pliku lub dodano do pamięci
         var inputNumber = Console.ReadLine();
-        if (inputNumber == "S")
+        if (inputNumber == "S" || inputNumber == "Q")
         {
             break;
         }
@@ -31,7 +55,7 @@ if (input == "T" || input == "t")
             {
                 bird.AddNumber(inputNumber);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -43,22 +67,15 @@ if (input == "T" || input == "t")
     Console.WriteLine($"Sum: {statistics.Sum}");
     Console.WriteLine($"Avarage: {statistics.Avarage}");
     Console.WriteLine($"Number of input data: {statistics.Count}");
-
-}
-else
-{
-    var bird = new BirdInFile(speciesNameReaded);
-    var statistics = bird.GetStatistics();
 }
 
+//void PrintStatistics(IBird bird)
+//{
+//    var statistics = new Statistics();
+//    Console.WriteLine($"Min: {statistics.Min}");
+//    Console.WriteLine($"Max: {statistics.Max}");
+//    Console.WriteLine($"Sum: {statistics.Sum}");
+//    Console.WriteLine($"Avarage: {statistics.Avarage}");
+//    Console.WriteLine($"Number of input data: {statistics.Count}");
 
-
-
-
-
-//var statistics = bird.GetStatistic();
-
-//Console.WriteLine("Enter subsequent numbers of observed individuals:"); // or paste paste coma separated set of data
-// event dodano do pliku lub dodano do pamięci
-
-//Console.WriteLine("(Avarage number of birds counted by one observer)");
+//}

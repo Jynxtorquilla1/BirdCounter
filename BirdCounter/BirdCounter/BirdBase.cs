@@ -12,7 +12,21 @@
         public abstract void AddNumber(int number);
 
 
-        public abstract void AddNumber(string number);
+        public virtual void AddNumber(string number)
+        {
+            if (int.TryParse(number, out int result))
+            {
+                AddNumber(result);
+            }
+            else if (char.TryParse(number, out char charResult))
+            {
+                AddNumber(charResult);
+            }
+            else
+            {
+                throw new Exception("Incorrect input");
+            }
+        }
 
 
         public virtual void AddNumber(char number)

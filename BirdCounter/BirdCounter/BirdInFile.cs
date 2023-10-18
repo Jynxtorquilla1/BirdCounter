@@ -2,28 +2,66 @@
 {
     internal class BirdInFile : BirdBase
     {
+        private string fileName;
+
         public BirdInFile(string speciesName) : base(speciesName)
         {
+            fileName = $"{speciesName}.txt";
         }
-
+        
         public override void AddNumber(int number)
         {
-            throw new NotImplementedException();
+            if (number >= 1)
+            {
+                using (var writer = File.AppendText(fileName))
+                {
+                    writer.WriteLine(number);
+
+                }                
+            }
+            else
+            {
+                throw new Exception("incorrect value");
+            }
         }
 
         public override void AddNumber(string number)
         {
-            throw new NotImplementedException();
+            base.AddNumber(number); 
         }
 
         public override void AddNumber(char number)
         {
-            throw new NotImplementedException();
+            base.AddNumber(number);
         }
 
         public override Statistics GetStatistics()
         {
-            throw new NotImplementedException();
+            var statistics = new Statistics();
+            if (File.Exists(fileName))
+            {
+                using( var reader = File.OpenText(fileName))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if(line == string.Empty) continue;
+
+                        if (int.TryParse(line, out int number))
+                        {
+                            statistics.CalculateStatistics(number);
+                        }
+                        else
+                        {
+                            throw new Exception("file contains invalid data");
+                        } 
+                            
+                    }
+                }
+                
+            }
+
+            return statistics;
         }
     }
 }

@@ -30,7 +30,7 @@
             Min = Math.Min(number, Min);
             Max = Math.Max(number, Min);
         }
-
+       
      
     }
 }

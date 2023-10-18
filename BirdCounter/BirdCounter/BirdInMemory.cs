@@ -22,18 +22,7 @@
 
         public override void AddNumber(string number)
         {
-            if(int.TryParse(number, out int result))
-            {
-                AddNumber(result);
-            }
-            else if (char.TryParse(number, out char charResult))
-            {
-                AddNumber(charResult);
-            }
-            else
-            {
-                throw new Exception("Incorrect input");
-            }
+            base.AddNumber(number);
         }
 
         public override void AddNumber(char number)
