@@ -8,21 +8,23 @@ var speciesNameReaded = Console.ReadLine();
 Console.WriteLine("press T key to work with temporary data");
 Console.WriteLine("press S key to get instant statistics of data stored in file");
 Console.WriteLine("press U  key to create new set of data or update existing file");
-Console.WriteLine("press Q  key to to quit and get statistics");
+Console.WriteLine("press Q  key anytime, to to quit and get statistics");
 // Jeśli podał T lub U to wyświetl: Console.WriteLine("pres Q key to quit and get statistics ");
 
 var input = Console.ReadLine();
+var inputUpper = input.ToUpper();
 
-if (input == "T" || input == "t")
+if (input == "T")
 {
     BirdInMemory bird = NewBirdInMemory();
     NumberReader(bird);
 }
-if (input == "U" || input == "u")
+if (input == "U")
 {
     BirdInFile bird = NewBirdInFile();
     NumberReader(bird);
 }
+
 
 BirdInMemory NewBirdInMemory()
 {
@@ -45,7 +47,8 @@ static void NumberReader(IBird bird)
     {
         Console.WriteLine("Enter subsequent numbers of observed individuals:"); // event dodano do pliku lub dodano do pamięci
         var inputNumber = Console.ReadLine();
-        if (inputNumber == "S" || inputNumber == "Q")
+        var inputNumUpper = inputNumber.ToUpper();
+        if (inputNumUpper == "S" || inputNumUpper == "Q")
         {
             break;
         }
@@ -53,7 +56,7 @@ static void NumberReader(IBird bird)
         {
             try
             {
-                bird.AddNumber(inputNumber);
+                bird.AddNumber(inputNumUpper);
             }
             catch (Exception ex)
             {
@@ -61,21 +64,15 @@ static void NumberReader(IBird bird)
             }
         }
     }
+    PrintStatistics(bird);
+}
+
+static void PrintStatistics(IBird bird)
+{
     var statistics = bird.GetStatistics();
     Console.WriteLine($"Min: {statistics.Min}");
     Console.WriteLine($"Max: {statistics.Max}");
     Console.WriteLine($"Sum: {statistics.Sum}");
-    Console.WriteLine($"Avarage: {statistics.Avarage}");
+    Console.WriteLine($"Avarage single observation: {statistics.Avarage}");
     Console.WriteLine($"Number of input data: {statistics.Count}");
 }
-
-//void PrintStatistics(IBird bird)
-//{
-//    var statistics = new Statistics();
-//    Console.WriteLine($"Min: {statistics.Min}");
-//    Console.WriteLine($"Max: {statistics.Max}");
-//    Console.WriteLine($"Sum: {statistics.Sum}");
-//    Console.WriteLine($"Avarage: {statistics.Avarage}");
-//    Console.WriteLine($"Number of input data: {statistics.Count}");
-
-//}
