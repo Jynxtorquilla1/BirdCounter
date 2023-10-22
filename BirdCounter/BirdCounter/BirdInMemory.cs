@@ -2,18 +2,17 @@
 {
     internal class BirdInMemory : BirdBase
     {
-        public BirdInMemory(string speciesName)  :base(speciesName)
+        public BirdInMemory(string speciesName) : base(speciesName)
         {
         }
 
         private List<int> birdNumbers = new List<int>();
-        
+
         public override void AddNumber(int number)
         {
             if (number >= 1)
             {
                 birdNumbers.Add(number);
-                //
             }
             else
             {
@@ -27,10 +26,10 @@
         }
 
         public override void AddNumber(char number)
-        {     
+        {
             base.AddNumber(number);
         }
-        
+
 
         public override Statistics GetStatistics()
         {
@@ -40,7 +39,7 @@
             {
                 statistics.CalculateStatistics(number);
             }
-            return statistics;            
+            return statistics;
         }
     }
 }
