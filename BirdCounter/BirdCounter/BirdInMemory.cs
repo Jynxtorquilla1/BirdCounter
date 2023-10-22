@@ -13,6 +13,7 @@
             if (number >= 1)
             {
                 birdNumbers.Add(number);
+                //
             }
             else
             {
