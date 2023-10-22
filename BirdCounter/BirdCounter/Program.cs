@@ -86,7 +86,8 @@ static void PrintMenu()
     Console.WriteLine("press S key to get instant statistics of data stored in file");
     Console.WriteLine("press U key to create new set of data or update existing file");
     Console.WriteLine("press Q key anytime, to to quit and get statistics");
-    Console.WriteLine("press N to start working with next species data");
+    Console.WriteLine("press N key to start working with next species data");
+    Console.WriteLine("press M key to view program manual");
 }
 
 static void ReadSpeciesName(out string speciesName)
@@ -155,11 +156,10 @@ static void PrintStatistics(IBird bird)
 //if fileExists dla nazwy/ event że plik istnieje 
 
 // "N" -> program od nowa
-// walidacja do liter z mentu + wyjątek
+// walidacja do liter z menu + wyjątek
 // tworzenie update i otwieranie pliku z nazwami
 // zakresy dla liter - podgląd w konsoli
-// 
-
+// Manual
 
 // switch(inputUpper)
 //{
