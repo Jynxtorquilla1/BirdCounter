@@ -6,7 +6,7 @@ Console.WriteLine("");
 
 Starter();
 
-//public delegate void StarterDelegate();//
+//public delegate void StarterDelegate();
 
 
 void Starter()
