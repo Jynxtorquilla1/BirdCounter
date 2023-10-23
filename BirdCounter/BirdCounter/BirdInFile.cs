@@ -16,7 +16,6 @@
                 using (var writer = File.AppendText(fileName))
                 {
                     writer.WriteLine(number);
-
                 }                
             }
             else
@@ -40,6 +39,8 @@
             var statistics = new Statistics();
             if (File.Exists(fileName))
             {
+                //tu dodać event
+                
                 using( var reader = File.OpenText(fileName))
                 {
                     string line;

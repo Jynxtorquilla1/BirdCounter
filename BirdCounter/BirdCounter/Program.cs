@@ -1,5 +1,4 @@
 ﻿using BirdCounter;
-using static System.Net.Mime.MediaTypeNames;
 
 Console.WriteLine("Welcome to BirdCounter application!");
 Console.WriteLine("");
@@ -17,6 +16,7 @@ void Starter()
 
 void RunProgram(string speciesName)
 {
+    
     while (true)
     {
         Console.WriteLine("Enter full species name:");       
@@ -29,14 +29,15 @@ void RunProgram(string speciesName)
         if (inputUpper == "T")
         {
 
-            BirdInMemory bird = NewBirdInMemory(speciesName);
-            NumberReader(bird, speciesName);
+            var bird = NewBirdInMemory(speciesName);
+            NumberReader(bird, speciesName);            
             PrintStatistics(bird);
             ContinueDecision();            
         }
         else if (inputUpper == "U")
         {
-            BirdInFile bird = NewBirdInFile(speciesName);
+            var speciesNameLower = speciesName.ToLower();
+            var bird = NewBirdInFile(speciesNameLower);
             NumberReader(bird, speciesName);
             PrintStatistics(bird);
             ContinueDecision();
@@ -96,18 +97,19 @@ static void ReadSpeciesName(out string speciesName)
 }
 
 BirdInMemory NewBirdInMemory(string speciesName)
-{
-    //string speciesNameReaded = ReadSpeciesName();
-    var bird = new BirdInMemory(speciesName);
-    return bird;
+{   
+    //var bird = new BirdInMemory(speciesName);
+    //return bird;
+
+    return new BirdInMemory(speciesName);
 }
 
 BirdInFile NewBirdInFile(string speciesName)
-{
-    //string speciesNameReaded = ReadSpeciesName();
-    var speciesNameLower = speciesName.ToLower();
-    var bird = new BirdInFile(speciesNameLower);
-    return bird;
+{  
+    //var speciesNameLower = speciesName.ToLower();
+    //var bird = new BirdInFile(speciesNameLower);
+    //return bird;
+    return new BirdInFile(speciesName);
 }
 
 void NumberReader(IBird bird, string speciesName)
