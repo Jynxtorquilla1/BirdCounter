@@ -1,4 +1,6 @@
 ﻿
+using static BirdCounter.BirdBase;
+
 namespace BirdCounter
 {
     public interface IBird
@@ -12,5 +14,7 @@ namespace BirdCounter
         void AddNumber (char number);
 
         Statistics GetStatistics();
+
+        event ObservationAddedDelegate ObservationAdded;
     }
 }

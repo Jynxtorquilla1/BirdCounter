@@ -2,6 +2,10 @@
 {
     public abstract class BirdBase : IBird
     {
+        public delegate void ObservationAddedDelegate(object sender, EventArgs args);
+
+        public abstract event ObservationAddedDelegate ObservationAdded;
+
         public BirdBase(string speciesName)
         {
             this.SpeciesName = speciesName;
@@ -31,6 +35,7 @@
 
         public virtual void AddNumber(char number)
         {
+            //var numberUpper = number.ToUpper(); NIE DZIAŁA SPRAWDŹ
             switch (number)
             {
                 case 'i':

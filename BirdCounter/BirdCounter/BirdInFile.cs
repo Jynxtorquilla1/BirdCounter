@@ -4,10 +4,13 @@
     {
         private string fileName;
 
+        public override event ObservationAddedDelegate ObservationAdded;
+
         public BirdInFile(string speciesName) : base(speciesName)
         {
-            fileName = $"{speciesName}.txt";
+            fileName = $"{speciesName}.txt";            
         }
+
         
         public override void AddNumber(int number)
         {
@@ -16,7 +19,11 @@
                 using (var writer = File.AppendText(fileName))
                 {
                     writer.WriteLine(number);
-                }                
+                }
+                if (ObservationAdded is not null)
+                {
+                    ObservationAdded(this, new EventArgs());
+                }
             }
             else
             {
@@ -39,8 +46,7 @@
             var statistics = new Statistics();
             if (File.Exists(fileName))
             {
-                //tu dodać event
-                
+                                
                 using( var reader = File.OpenText(fileName))
                 {
                     string line;
