@@ -8,65 +8,67 @@ Starter();
 
 void Starter()
 {
-    string speciesName = "";
     Console.WriteLine("Enter full species name:");
-    RunProgram(speciesName);
+    RunProgram();
 }
 
-void RunProgram(string speciesName)
+void RunProgram()
 {
+    string speciesName = "";   
     ReadSpeciesName(out speciesName);
     CheckFileExists(speciesName);
     PrintMenu();
+
+    IBird bird = null;
 
     while (true)
     {
         var input = Console.ReadLine()!;
         var inputUpper = input.ToUpper();
 
-        if (inputUpper == "T")
+        switch (inputUpper)
         {
-            var bird = NewBirdInMemory(speciesName);
-            bird.ObservationAdded += ObservationAdded;
+            case "T":
+                bird = NewBirdInMemory(speciesName);
+                bird.ObservationAdded += ObservationAdded;
+                break;
+            case "U":
+                var speciesNameLower = speciesName.ToLower();
+                bird = NewBirdInFile(speciesNameLower);
+                break;
+            case "Q":
+                //PrintStatistics(bird);
+                //ContinueDecision();
+                break;
+            case "N":
+                Console.Clear();
+                Console.WriteLine("BirdCounter new session");
+                Console.WriteLine("------------------------------------------------------");
+                Starter();
+                break;
+            case "G":
+                Console.WriteLine(" I: 50-70 H: 71-100 G: 101-150 F: 151-200, E: 201-300, D: 301-400, C: 401-500, B: 501-700, A: 700-1000");
+                Console.WriteLine("lease choose key T or key U from the menu to start editing data");
+                break;
+
+            default:
+                Console.WriteLine("Incorrect value - choose key from menu");
+                continue;
+        }
+
+        if (bird != null)
+        {
             NumberReader(bird, speciesName);
             PrintStatistics(bird);
             ContinueDecision();
-        }
-        else if (inputUpper == "U")
-        {
-            var speciesNameLower = speciesName.ToLower();
-            var bird = NewBirdInFile(speciesNameLower);
-            bird.ObservationAdded += ObservationAdded;
-            NumberReader(bird, speciesName);
-            PrintStatistics(bird);
-            ContinueDecision();
-        }
-        else if (inputUpper == "Q")
-        {
-            BirdInFile bird = NewBirdInFile(speciesName);
-            PrintStatistics(bird);
-            ContinueDecision();
-        }
-        else if (inputUpper == "N")
-        {
-            Console.Clear();
-            Console.WriteLine("BirdCounter new sesion");
-            Console.WriteLine("------------------------------------------------------");
-            Starter();
-        }
-        else if (inputUpper == "G")
-        {
-            Console.WriteLine(" I: 50-70 H: 71-100 G: 101-150 F: 151-200, E: 201-300, D: 301-400, C: 401-500, B: 501-700, A: 700-1000");
-            Console.WriteLine("now please chose another key from menu");
-            continue;
         }
         else
         {
-            Console.WriteLine("Incorrect value - chose key from menu");
-            continue;
+            Console.WriteLine("Bird object not initialized. Choose 'T' or 'U' first.");
         }
     }
 }
+
 
 
 void CheckFileExists(string speciesName)
@@ -123,13 +125,13 @@ static void ReadSpeciesName(out string speciesName)
 }
 
 BirdInMemory NewBirdInMemory(string speciesName)
-{
-    return new BirdInMemory(speciesName);
+{    
+    return new BirdInMemory(speciesName);    
 }
 
 BirdInFile NewBirdInFile(string speciesName)
-{
-    return new BirdInFile(speciesName);
+{    
+    return new BirdInFile(speciesName);    
 }
 
 void NumberReader(IBird bird, string speciesName)
@@ -189,23 +191,8 @@ void ObservationAdded(object sender, EventArgs args)
 
 
 // testy jednostkowe
-// switch
 // hermetyzacja
+// case "Q" bez danych
 
 
 
-
-
-// switch(inputUpper)
-//{
-//    case var inp when inp == "T":
-//        BirdInMemory bird = NewBirdInMemory();
-//        NumberReader(bird, speciesName);
-//        PrintStatistics(bird);
-//        break;
-//    case var inp when inp == "U":
-//        BirdInFile bird = NewBirdInFile();
-//        NumberReader(bird, speciesName);
-//        PrintStatistics(bird);
-//        break;
-//}

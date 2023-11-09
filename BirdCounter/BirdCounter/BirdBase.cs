@@ -75,7 +75,7 @@
                     AddNumber(850);
                     break;
                 default: throw new Exception("Incorrect letter");
-                    //50-70 71-100 101-150 151-200, 201-300, 301-400, 401-500, 501-700, 700-1000
+                    
             }
         }
 
