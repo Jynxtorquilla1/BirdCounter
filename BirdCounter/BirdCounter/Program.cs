@@ -20,7 +20,7 @@ void RunProgram()
     PrintMenu();
 
     IBird bird = null;
-
+     
     while (true)
     {
         var input = Console.ReadLine()!;
@@ -30,15 +30,15 @@ void RunProgram()
         {
             case "T":
                 bird = NewBirdInMemory(speciesName);
-                bird.ObservationAdded += ObservationAdded;
+                bird.GroupObservationEvent += GroupObservationAdded;
                 break;
             case "U":
-                var speciesNameLower = speciesName.ToLower();
-                bird = NewBirdInFile(speciesNameLower);
+                var speciesNameLower = speciesName.ToLower();                
+                bird = NewBirdInFile(speciesNameLower);                
+                bird.GroupObservationEvent += GroupObservationAdded;
+                bird.FileCreatedEvent += FileUpdated;
                 break;
-            case "Q":
-                //PrintStatistics(bird);
-                //ContinueDecision();
+            case "Q":               
                 break;
             case "N":
                 Console.Clear();
@@ -47,9 +47,10 @@ void RunProgram()
                 Starter();
                 break;
             case "G":
-                Console.WriteLine(" I: 50-70 H: 71-100 G: 101-150 F: 151-200, E: 201-300, D: 301-400, C: 401-500, B: 501-700, A: 700-1000");
-                Console.WriteLine("lease choose key T or key U from the menu to start editing data");
-                break;
+                Console.WriteLine("     key letter - estimated range of number of individuals observed");
+                Console.WriteLine("     I: 50-70 H: 71-100 G: 101-150 F: 151-200, E: 201-300, D: 301-400, C: 401-500, B: 501-700, A: 700-1000");
+                Console.WriteLine("     please choose key T or key U from the menu to start editing data");
+                continue;
 
             default:
                 Console.WriteLine("Incorrect value - choose key from menu");
@@ -58,18 +59,16 @@ void RunProgram()
 
         if (bird != null)
         {
-            NumberReader(bird, speciesName);
-            PrintStatistics(bird);
+            NumberReader(bird, speciesName);            
+            PrintStatistics(bird);            
             ContinueDecision();
         }
         else
         {
-            Console.WriteLine("Bird object not initialized. Choose 'T' or 'U' first.");
+            Starter();
         }
     }
 }
-
-
 
 void CheckFileExists(string speciesName)
 {
@@ -89,7 +88,7 @@ void ContinueDecision()
     Console.WriteLine("------------------------------------------------------");
     Console.WriteLine("Do you want to continue your work?");
     Console.WriteLine("Press Y key to start new sesion");
-    Console.WriteLine("Press any other key to exit the pllication");
+    Console.WriteLine("Press any other key to exit the allication");
     Console.WriteLine("------------------------------------------------------");
 
     var answer = Console.ReadLine()!;
@@ -138,7 +137,7 @@ void NumberReader(IBird bird, string speciesName)
 {
     while (true)
     {
-        Console.WriteLine("Enter subsequent numbers of observed individuals:"); // event - dodano do pliku lub dodano do pamięci
+        Console.WriteLine("Enter subsequent numbers of observed individuals:"); 
         var inputNumber = Console.ReadLine();
         var inputNumUpper = inputNumber.ToUpper();
         if (inputNumUpper == "Q")
@@ -184,15 +183,23 @@ void PrintStatistics(IBird bird)
 
 }
 
-void ObservationAdded(object sender, EventArgs args)
+void GroupObservationAdded(object sender, EventArgs args)
 {
-    Console.WriteLine("An observation has been aded");
+    Console.WriteLine("group observation has been added");
 }
+
+void FileUpdated(object sender, EventArgs args)
+{
+    Console.WriteLine("new file has been updated");
+}
+
+
 
 
 // testy jednostkowe
 // hermetyzacja
-// case "Q" bez danych
+// ogarnąć EventArgs
+
 
 
 

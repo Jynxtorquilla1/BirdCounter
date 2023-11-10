@@ -1,17 +1,35 @@
-﻿namespace BirdCounter
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace BirdCounter
 {
     internal class BirdInFile : BirdBase
     {
         private string fileName;
 
-        public override event ObservationAddedDelegate ObservationAdded;
+        public override event FileCreatedDelegate FileCreatedEvent;
 
         public BirdInFile(string speciesName) : base(speciesName)
         {
-            fileName = $"{speciesName}.txt";            
+            fileName = $"{speciesName}.txt";
+
+            if (!File.Exists($"{speciesName}.txt"))
+            {
+                using (var writer = new StreamWriter(fileName, true))
+                {
+
+                    FileCreatedEvent += FileCreated;             
+
+                    FileCreatedEvent?.Invoke(this, new EventArgs());
+                }
+            }           
+
         }
 
-        
+        void FileCreated(object sender, EventArgs args)
+        {
+            Console.WriteLine("new file has been created");
+        }
+
         public override void AddNumber(int number)
         {
             if (number >= 1)
@@ -19,10 +37,6 @@
                 using (var writer = File.AppendText(fileName))
                 {
                     writer.WriteLine(number);
-                }
-                if (ObservationAdded is not null)
-                {
-                    ObservationAdded(this, new EventArgs());
                 }
             }
             else
@@ -33,7 +47,7 @@
 
         public override void AddNumber(string number)
         {
-            base.AddNumber(number); 
+            base.AddNumber(number);
         }
 
         public override void AddNumber(char number)
@@ -46,13 +60,13 @@
             var statistics = new Statistics();
             if (File.Exists(fileName))
             {
-                                
-                using( var reader = File.OpenText(fileName))
+
+                using (var reader = File.OpenText(fileName))
                 {
                     string line;
                     while ((line = reader.ReadLine()) != null)
                     {
-                        if(line == string.Empty) continue;
+                        if (line == string.Empty) continue;
 
                         if (int.TryParse(line, out int number))
                         {
@@ -61,11 +75,11 @@
                         else
                         {
                             throw new Exception("file contains invalid data");
-                        } 
-                            
+                        }
+
                     }
                 }
-                
+
             }
 
             return statistics;

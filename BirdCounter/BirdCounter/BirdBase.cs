@@ -1,10 +1,16 @@
-﻿namespace BirdCounter
+﻿using static BirdCounter.BirdInFile;
+
+namespace BirdCounter
 {
     public abstract class BirdBase : IBird
     {
-        public delegate void ObservationAddedDelegate(object sender, EventArgs args);
+        public delegate void GroupObservationDelegate(object sender, EventArgs args);
 
-        public abstract event ObservationAddedDelegate ObservationAdded;
+        public  event GroupObservationDelegate GroupObservationEvent;
+
+        public delegate void FileCreatedDelegate(object sender, EventArgs args);
+
+        public  abstract event FileCreatedDelegate FileCreatedEvent;
 
         public BirdBase(string speciesName)
         {
@@ -76,6 +82,10 @@
                     break;
                 default: throw new Exception("Incorrect letter");
                     
+            }
+            if (GroupObservationEvent != null)
+            {
+                GroupObservationEvent(this, new EventArgs());
             }
         }
 

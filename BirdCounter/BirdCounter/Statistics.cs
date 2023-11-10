@@ -22,8 +22,6 @@
 
             Min = int.MaxValue;
             Max = int.MinValue;
-
-
         }
 
         public void CalculateStatistics(int number)
