@@ -6,29 +6,36 @@ namespace BirdCounter
     {
         private string fileName;
 
-        public override event FileCreatedDelegate FileCreatedEvent;
+        //public override event FileCreatedDelegate FileCreatedEvent;
+        //public  delegate void FileCreatedDelegate(string message);
 
         public BirdInFile(string speciesName) : base(speciesName)
         {
             fileName = $"{speciesName}.txt";
 
-            if (!File.Exists($"{speciesName}.txt"))
+            while (!File.Exists($"{speciesName}.txt"))
             {
                 using (var writer = new StreamWriter(fileName, true))
                 {
-
-                    FileCreatedEvent += FileCreated;             
-
-                    FileCreatedEvent?.Invoke(this, new EventArgs());
+                    //FileCreatedEvent += FileCreated;
+                    //FileCreatedEvent?.Invoke(this, new EventArgs());
+                    if (File.Exists($"{speciesName}.txt"))
+                    {
+                        Console.WriteLine("New file has been created");
+                    }
+                    else
+                    {
+                        throw new Exception("File has not been created because of unknown error. Try again");                         
+                    }
                 }
-            }           
+            }
 
         }
 
-        void FileCreated(object sender, EventArgs args)
-        {
-            Console.WriteLine("new file has been created");
-        }
+        //void FileCreated(object sender, EventArgs args)
+        //{
+        //    Console.WriteLine("new file has been created");
+        //}        
 
         public override void AddNumber(int number)
         {

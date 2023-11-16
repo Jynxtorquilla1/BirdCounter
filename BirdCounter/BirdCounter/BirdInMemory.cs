@@ -3,7 +3,7 @@
     internal class BirdInMemory : BirdBase
     {
 
-        public override event FileCreatedDelegate FileCreatedEvent;
+        //public override event FileCreatedDelegate FileCreatedEvent;
         public BirdInMemory(string speciesName) : base(speciesName)
         {
         }

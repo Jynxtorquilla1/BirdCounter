@@ -18,7 +18,7 @@ namespace BirdCounter
 
         event GroupObservationDelegate GroupObservationEvent;
 
-        event FileCreatedDelegate FileCreatedEvent;
+        //event FileCreatedDelegate FileCreatedEvent;
 
     }
 }

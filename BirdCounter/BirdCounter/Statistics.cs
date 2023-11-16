@@ -7,7 +7,7 @@
         public float Avarage
         {
             get
-            {                
+            {    
                 return (float)Sum / Count;
             }
         }

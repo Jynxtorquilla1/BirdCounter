@@ -8,9 +8,9 @@ namespace BirdCounter
 
         public  event GroupObservationDelegate GroupObservationEvent;
 
-        public delegate void FileCreatedDelegate(object sender, EventArgs args);
-
-        public  abstract event FileCreatedDelegate FileCreatedEvent;
+        //public delegate void FileCreatedDelegate(object sender, EventArgs args);
+        //public delegate void FileCreatedDelegate(string message);
+        //public  abstract event FileCreatedDelegate FileCreatedEvent;
 
         public BirdBase(string speciesName)
         {
