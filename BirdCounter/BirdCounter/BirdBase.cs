@@ -6,11 +6,7 @@ namespace BirdCounter
     {
         public delegate void GroupObservationDelegate(object sender, EventArgs args);
 
-        public  event GroupObservationDelegate GroupObservationEvent;
-
-        //public delegate void FileCreatedDelegate(object sender, EventArgs args);
-        //public delegate void FileCreatedDelegate(string message);
-        //public  abstract event FileCreatedDelegate FileCreatedEvent;
+        public event GroupObservationDelegate GroupObservationEvent;
 
         public BirdBase(string speciesName)
         {
@@ -37,7 +33,6 @@ namespace BirdCounter
                 throw new Exception("Incorrect input");
             }
         }
-
 
         public virtual void AddNumber(char number)
         {
@@ -81,7 +76,7 @@ namespace BirdCounter
                     AddNumber(850);
                     break;
                 default: throw new Exception("Incorrect letter");
-                    
+
             }
             if (GroupObservationEvent != null)
             {
@@ -90,6 +85,6 @@ namespace BirdCounter
         }
 
         public abstract Statistics GetStatistics();
-        
+
     }
 }

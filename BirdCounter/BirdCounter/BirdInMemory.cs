@@ -3,7 +3,6 @@
     internal class BirdInMemory : BirdBase
     {
 
-        //public override event FileCreatedDelegate FileCreatedEvent;
         public BirdInMemory(string speciesName) : base(speciesName)
         {
         }
@@ -14,7 +13,7 @@
         {
             if (number >= 1)
             {
-                birdNumbers.Add(number);               
+                birdNumbers.Add(number);
             }
             else
             {

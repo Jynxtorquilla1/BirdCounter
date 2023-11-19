@@ -36,19 +36,20 @@ void RunProgram()
                 bird = NewBirdInMemory(speciesName);
                 bird.GroupObservationEvent += GroupObservationAdded;
                 break;
+
             case "U":
                 try
                 {
                     var speciesNameLower = speciesName.ToLower();
                     bird = NewBirdInFile(speciesNameLower);
-                    bird.GroupObservationEvent += GroupObservationAdded; 
+                    bird.GroupObservationEvent += GroupObservationAdded;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-                }
-                //bird.FileCreatedEvent += FileUpdated;
+                }                
                 break;
+
             case "S":
                 if (File.Exists($"{speciesName}.txt"))
                 {
@@ -65,12 +66,14 @@ void RunProgram()
 
                 }
                 break;
+
             case "N":
                 Console.Clear();
                 Console.WriteLine("BirdCounter new session");
                 Console.WriteLine("------------------------------------------------------");
                 Starter();
                 break;
+
             case "G":
                 Console.WriteLine("     key letter - estimated range of number of individuals observed");
                 Console.WriteLine("     I: 50-70 H: 71-100 G: 101-150 F: 151-200, E: 201-300, D: 301-400, C: 401-500, B: 501-700, A: 700-1000");
@@ -93,6 +96,78 @@ void RunProgram()
             continue;
         }
     }
+}
+
+static void ReadSpeciesName(out string speciesName)
+{
+    speciesName = Console.ReadLine()!;
+}
+
+BirdInMemory NewBirdInMemory(string speciesName)
+{
+    return new BirdInMemory(speciesName);
+}
+
+BirdInFile NewBirdInFile(string speciesName)
+{
+    return new BirdInFile(speciesName);
+}
+
+void NumberReader(IBird bird, string speciesName)
+{
+    while (true)
+    {
+        Console.WriteLine("Enter consecutive numbers of individuals observed:");
+        var inputNumber = Console.ReadLine();
+        var inputNumUpper = inputNumber.ToUpper();
+        if (inputNumUpper == "S")
+        {
+            if (bird is BirdInFile)
+            {
+                PrintStatistics(bird);
+                FileUpdateDecision(bird, speciesName);
+                break; //czy potrzebne?
+            }
+            break;
+        }
+        else if (inputNumUpper == "N")
+        {
+            Console.Clear();
+            Starter();
+        }
+        else
+        {
+            try
+            {
+                bird.AddNumber(inputNumUpper);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    }
+}
+
+void PrintStatistics(IBird bird)
+{
+    var statistics = bird.GetStatistics();
+
+    if (statistics.Count == 0)
+    {
+        Console.WriteLine("Statistics cannot be calculated as no data is provided");
+        ContinueDecision();
+    }
+    else
+    {
+        Console.WriteLine($"Bird species: {bird.SpeciesName}");
+        Console.WriteLine($"Min: {statistics.Min}");
+        Console.WriteLine($"Max: {statistics.Max}");
+        Console.WriteLine($"Sum: {statistics.Sum}");
+        Console.WriteLine($"Avarage single observation: {Math.Round(statistics.Avarage)}");
+        Console.WriteLine($"Number of input data: {statistics.Count}");
+    }
+
 }
 
 void CheckFileExists(string speciesName)
@@ -158,81 +233,10 @@ static void PrintMenu()
     Console.WriteLine("------------------------------------------------------");
     Console.WriteLine("press T key to work with temporary data");
     Console.WriteLine("press U key to create a new data set file or to update an existing file");
-    Console.WriteLine("press S key anytime to get instant statistics from file or or from supplied data");
+    Console.WriteLine("press S key anytime to get instant statistics from file or from supplied data");
     Console.WriteLine("press N key anytime to start new session");
     Console.WriteLine("press G key to display group observation codes");
     Console.WriteLine("------------------------------------------------------");
-}
-
-static void ReadSpeciesName(out string speciesName)
-{
-    speciesName = Console.ReadLine()!;    
-}
-
-BirdInMemory NewBirdInMemory(string speciesName)
-{
-    return new BirdInMemory(speciesName);
-}
-
-BirdInFile NewBirdInFile(string speciesName)
-{
-    return new BirdInFile(speciesName);
-}
-
-void NumberReader(IBird bird, string speciesName)
-{
-    while (true)
-    {
-        Console.WriteLine("Enter consecutive numbers of individuals observed:");
-        var inputNumber = Console.ReadLine();
-        var inputNumUpper = inputNumber.ToUpper();
-        if (inputNumUpper == "S")
-        {
-            if (bird is BirdInFile)
-                {
-                PrintStatistics(bird);
-                FileUpdateDecision(bird, speciesName);
-                break;
-            }
-            break;
-        }
-        else if (inputNumUpper == "N")
-        {
-            Console.Clear();
-            Starter();
-        }
-        else
-        {
-            try
-            {
-                bird.AddNumber(inputNumUpper);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-    }
-}
-
-void PrintStatistics(IBird bird)
-{
-    var statistics = bird.GetStatistics();
-
-    if (statistics.Count == 0)
-    {
-        Console.WriteLine("Statistics cannot be calculated as no data is provided");
-        ContinueDecision();
-    }
-    else
-    {
-        Console.WriteLine($"Min: {statistics.Min}");
-        Console.WriteLine($"Max: {statistics.Max}");
-        Console.WriteLine($"Sum: {statistics.Sum}");
-        Console.WriteLine($"Avarage single observation: {Math.Round(statistics.Avarage)}");
-        Console.WriteLine($"Number of input data: {statistics.Count}");
-    }
-
 }
 
 void GroupObservationAdded(object sender, EventArgs args)
@@ -240,10 +244,9 @@ void GroupObservationAdded(object sender, EventArgs args)
     Console.WriteLine("group observation has been added");
 }
 
-
 // testy jednostkowe
 // hermetyzacja
-// ogarnąć EventArgs
+
 
 
 

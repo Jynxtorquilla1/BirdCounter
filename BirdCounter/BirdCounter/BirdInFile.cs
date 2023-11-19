@@ -1,13 +1,8 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace BirdCounter
+﻿namespace BirdCounter
 {
     internal class BirdInFile : BirdBase
     {
         private string fileName;
-
-        //public override event FileCreatedDelegate FileCreatedEvent;
-        //public  delegate void FileCreatedDelegate(string message);
 
         public BirdInFile(string speciesName) : base(speciesName)
         {
@@ -17,25 +12,18 @@ namespace BirdCounter
             {
                 using (var writer = new StreamWriter(fileName, true))
                 {
-                    //FileCreatedEvent += FileCreated;
-                    //FileCreatedEvent?.Invoke(this, new EventArgs());
                     if (File.Exists($"{speciesName}.txt"))
                     {
                         Console.WriteLine("New file has been created");
                     }
                     else
                     {
-                        throw new Exception("File has not been created because of unknown error. Try again");                         
+                        throw new Exception("File has not been created because of unknown error. Try again");
                     }
                 }
             }
 
         }
-
-        //void FileCreated(object sender, EventArgs args)
-        //{
-        //    Console.WriteLine("new file has been created");
-        //}        
 
         public override void AddNumber(int number)
         {
