@@ -1,6 +1,5 @@
 ﻿
 using static BirdCounter.BirdBase;
-using static BirdCounter.BirdInFile;
 
 namespace BirdCounter
 {

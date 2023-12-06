@@ -18,8 +18,7 @@ void Starter()
 
 void RunProgram()
 {
-    string speciesName = "";
-    ReadSpeciesName(out speciesName);
+    string speciesName = ReadSpeciesName();
     CheckFileExists(speciesName);
     PrintMenu();
 
@@ -27,10 +26,9 @@ void RunProgram()
 
     while (true)
     {
-        var input = Console.ReadLine()!;
-        var inputUpper = input.ToUpper();
+        var input = Console.ReadLine()!.ToUpper();        
 
-        switch (inputUpper)
+        switch (input)
         {
             case "T":
                 bird = NewBirdInMemory(speciesName);
@@ -98,9 +96,9 @@ void RunProgram()
     }
 }
 
-static void ReadSpeciesName(out string speciesName)
+static string ReadSpeciesName()
 {
-    speciesName = Console.ReadLine()!;
+    return Console.ReadLine();
 }
 
 BirdInMemory NewBirdInMemory(string speciesName)

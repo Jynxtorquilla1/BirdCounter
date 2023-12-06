@@ -1,6 +1,4 @@
-﻿using static BirdCounter.BirdInFile;
-
-namespace BirdCounter
+﻿namespace BirdCounter
 {
     public abstract class BirdBase : IBird
     {
@@ -18,7 +16,7 @@ namespace BirdCounter
         public abstract void AddNumber(int number);
 
 
-        public virtual void AddNumber(string number)
+        public void AddNumber(string number)
         {
             if (int.TryParse(number, out int result))
             {
@@ -34,9 +32,8 @@ namespace BirdCounter
             }
         }
 
-        public virtual void AddNumber(char number)
+        public void AddNumber(char number)
         {
-            //var numberUpper = number.ToUpper(); NIE DZIAŁA SPRAWDŹ
             switch (number)
             {
                 case 'i':
@@ -78,7 +75,7 @@ namespace BirdCounter
                 default: throw new Exception("Incorrect letter");
 
             }
-            if (GroupObservationEvent != null)
+            if (GroupObservationEvent is not null)
             {
                 GroupObservationEvent(this, new EventArgs());
             }

@@ -1,6 +1,6 @@
 ﻿namespace BirdCounter
 {
-    internal class BirdInFile : BirdBase
+    public class BirdInFile : BirdBase
     {
         private string fileName;
 
@@ -38,17 +38,7 @@
             {
                 throw new Exception("incorrect value");
             }
-        }
-
-        public override void AddNumber(string number)
-        {
-            base.AddNumber(number);
-        }
-
-        public override void AddNumber(char number)
-        {
-            base.AddNumber(number);
-        }
+        }      
 
         public override Statistics GetStatistics()
         {
