@@ -1,5 +1,4 @@
-﻿
-using static BirdCounter.BirdBase;
+﻿using static BirdCounter.BirdBase;
 
 namespace BirdCounter
 {
@@ -16,6 +15,6 @@ namespace BirdCounter
         Statistics GetStatistics();
 
         event GroupObservationDelegate GroupObservationEvent;
-
     }
+
 }

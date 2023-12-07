@@ -1,7 +1,6 @@
 ﻿namespace BirdCounter
 {
-    public class BirdInMemory : BirdBase
-    {
+    public class BirdInMemory : BirdBase    {
 
         public BirdInMemory(string speciesName) : base(speciesName)
         {

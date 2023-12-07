@@ -75,6 +75,7 @@
                 default: throw new Exception("Incorrect letter");
 
             }
+
             if (GroupObservationEvent is not null)
             {
                 GroupObservationEvent(this, new EventArgs());

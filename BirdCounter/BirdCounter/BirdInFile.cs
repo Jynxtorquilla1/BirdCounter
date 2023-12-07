@@ -66,8 +66,8 @@
                 }
 
             }
-
             return statistics;
+
         }
     }
 }

@@ -124,7 +124,7 @@ void NumberReader(IBird bird, string speciesName)
             {
                 PrintStatistics(bird);
                 FileUpdateDecision(bird, speciesName);
-                break; //czy potrzebne?
+                break; 
             }
             break;
         }
@@ -242,8 +242,6 @@ void GroupObservationAdded(object sender, EventArgs args)
     Console.WriteLine("group observation has been added");
 }
 
-// testy jednostkowe
-// hermetyzacja
 
 
 
